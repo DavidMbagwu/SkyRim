@@ -1,0 +1,120 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+body {
+    background-color: #222831;
+}
+
+#myCustomNavbar {
+    background-color: #222831;
+}
+
+#myCustomNavbar .navbar-brand {
+    color: #6eacda;
+}
+#myCustomNavbar .nav-link {
+    color: #6eacda;
+}
+
+#intro-message {
+    color: whitesmoke;
+    width: 500px;
+    position:absolute;
+    left: 20px;
+    top: 250px;
+}
+
+#glow-emphasis {
+    color: #6eacda;
+    text-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
+
+.intro-btn1 {
+    background-color: #6eacda;
+    color: #222831;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
+.intro-btn1:hover {
+    background-color: #89c4ec;
+    color: #1b1f24;
+    box-shadow: 0 6px 14px rgba(110, 172, 218, 0.35);
+    transform: translateY(-2px);
+}
+
+.intro-btn2 {
+    background-color: white;
+    color: #222831;
+    border: none;
+    padding: 12px 24px;
+    margin-left: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
+
+    .intro-btn2:hover {
+        background-color: lavender;
+        color: #1b1f24;
+        box-shadow: 0 6px 14px rgba(110, 172, 218, 0.35);
+        transform: translateY(-2px);
+    }
+
+#register-container {
+    position: absolute;
+    left: 250px;
+    top: 250px;
+    color: lavender;
+    
+}
+
+#register-module {
+    border: 5px solid;
+    border-color: #6eacda;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.heading-phrase {
+    text-align: center;
+    color: #6eacda;
+    text-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
