@@ -1,0 +1,57 @@
+﻿@model SkyRim.Models.UserDetails
+@{
+	ViewData["Title"] = "User Details";
+}
+
+<div id="register-module" class="col-md-4">
+    <form id="registerForm" asp-action="UserDetailsForm" asp-controller="Profile" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="User" />
+
+        <h2>Fill in User Details</h2>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="FirstName" class="form-control" aria-required="true" placeholder="Ex. David" />
+            <label asp-for="FirstName">First Name</label>
+            <span asp-validation-for="FirstName" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="MiddleName" class="form-control" aria-required="false" placeholder="Ex. A." />
+            <label asp-for="MiddleName">Middle Name (Optional)</label>
+			<span asp-validation-for="MiddleName" class="text-red-500 text-xs italic"></span>
+		</div>
+        <div class="form-floating mb-3">
+            <input asp-for="LastName" class="form-control" aria-required="true" placeholder="Ex. Walker" />
+            <label asp-for="LastName">Last Name</label>
+            <span asp-validation-for="LastName" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Region" class="form-control" aria-required="true" placeholder="Ex. Houston" />
+            <label asp-for="Region">Region</label>
+            <span asp-validation-for="Region" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="State" class="form-control" aria-required="true" placeholder="Ex. Texas" />
+            <label asp-for="State">State</label>
+            <span asp-validation-for="State" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Country" class="form-control" aria-required="true" placeholder="Ex. United States" />
+            <label asp-for="Country">Country</label>
+            <span asp-validation-for="Country" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="LinkedInUrl" class="form-control" aria-required="false" placeholder="Ex. David" />
+            <label asp-for="LinkedInUrl">LinkedIn URL (Optional)</label>
+            <span asp-validation-for="LinkedInUrl" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="GitHubUrl" class="form-control" aria-required="true" placeholder="Ex. David" />
+            <label asp-for="GitHubUrl">GitHub URL (Optional)</label>
+            <span asp-validation-for="GitHubUrl" class="text-red-500 text-xs italic"></span>
+        </div>
+        <button type="submit" class="w-100 btn btn-lg btn-primary">Save Profile</button>
+    </form>
+</div>

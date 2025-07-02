@@ -46,6 +46,13 @@ namespace SkyRim.Data
                 .HasForeignKey(l => l.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Configure the one-to-one relationship for UserDetails
+            builder.Entity<UserDetails>()
+                .HasOne(ud => ud.User)         // UserDetails has one IdentityUser
+                .WithOne()                     // IdentityUser has one UserDetails
+                .HasForeignKey<UserDetails>(ud => ud.Id); // Foreign key is UserDetails.Id
+
+
         }
     }
 }

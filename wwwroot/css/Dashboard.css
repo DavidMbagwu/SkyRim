@@ -1,0 +1,92 @@
+﻿body {
+}
+
+#dashboard-header {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.dashboard-detail-card {
+    background-color: #3e434b;
+    color: lavender;
+    padding: 12px;
+    max-width: 30vh;
+    border-radius: 25px;
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+    .dashboard-detail-card:hover {
+        transform: scale(1.05);
+        cursor: pointer;
+    }
+
+.detail-header-text{
+    font-size: 25px;
+}
+
+.dashboard-detail-card-icon {
+    height: 70px;
+    width: 70px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+#dashboard-details {
+    display: flex;
+    gap: 2rem;
+}
+
+#dashboard-detail-card-course {
+    background-color: #d4b3d8;
+    color: #3e434b;
+}
+
+#dashboard-detail-card-course-complete {
+    background-color: #adebcc;
+    color: #3e434b;
+}
+
+#dashboard-detail-card-challenges {
+    background-color: #adebe5;
+    color: #3e434b;
+}
+
+#dashboard-detail-card-time {
+    background-color: #d0c8f2;
+    color: #3e434b;
+}
+
+#dashboard-info{
+    display: flex;
+    gap: 2rem;
+    margin-top: 30px;
+    color: white;
+}
+
+#dashboard-graph {
+    padding: 15px;
+    border-right: solid 1.5px;
+    border-color: #3e434b;
+}
+
+#dashboard-courses{
+    padding: 15px;
+}
+
+.course-card {
+    display: flex;
+    color: white;
+    gap: 1rem;
+}
+#course-card-image {
+    width: 290px;
+    height: 165px;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+#course-card-image:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}

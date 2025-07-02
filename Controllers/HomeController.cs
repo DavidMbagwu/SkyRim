@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SkyRim.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SkyRim.Controllers
 {
@@ -11,6 +12,12 @@ namespace SkyRim.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        [Authorize] // Only authenticated users can access this
+        public IActionResult Dashboard()
+        {
+            return View();
         }
 
         public IActionResult Index()

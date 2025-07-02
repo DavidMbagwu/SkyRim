@@ -111,10 +111,30 @@ body {
     border-color: #6eacda;
     border-radius: 15px;
     padding: 15px;
+    color: #6eacda;
 }
 
 .heading-phrase {
     text-align: center;
     color: #6eacda;
     text-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
+
+#introimg {
+    width: 600px;
+    height: 450px;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#intro-image-container {
+    position: absolute;
+    left: 800px;
+    top: 130px;
+    width: 600px;
+}
+
+#introimg:hover {
+    transform: scale(1.05);
+    cursor: pointer;
 }

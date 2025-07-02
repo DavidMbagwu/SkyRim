@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SkyRim.Models
 {
@@ -46,6 +47,6 @@ namespace SkyRim.Models
         // Navigation property for the one-to-one relationship back to the IdentityUser
         // This explicitly tells EF Core that 'Id' is also a foreign key to IdentityUser.Id
         [ForeignKey("Id")]
-        public IdentityUser User { get; set; } = null!;
+        public IdentityUser? User { get; set; } = null;
     }
 }
