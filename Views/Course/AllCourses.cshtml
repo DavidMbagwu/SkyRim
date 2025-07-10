@@ -1,0 +1,209 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.EntityFrameworkCore
+@using SkyRim.Models
+@using SkyRim.Data
+@inject ApplicationDbContext Context
+
+@model SkyRim.Models.UserDetails
+@{
+	ViewData["Title"] = "All Course";
+}
+
+<link rel="stylesheet" href="~/css/AllCourses.css" asp-append-version="true" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+	var userId = UserManager.GetUserId(User);
+	var userDetails = await Context.UserDetails.FirstOrDefaultAsync(ud => ud.Id == userId);
+	var userCourses = await Context.UserCourses
+										.Where(uc => uc.UserId == userId)
+										.ToArrayAsync();
+	int createdCoursesCount = await Context.CreatedCourses
+										.Where(uc => uc.UserId == userId)
+										.CountAsync();
+	int allCoursesCount = await Context.Courses.CountAsync();
+
+	<div class="min-vh-100" id="course-manage-container">
+		<div id="course-manage-header">
+			<h1>Available Courses 📓</h1>
+			<div id="course-manage-control_bar">
+
+				<form id="search-bar" asp-action="Search" asp-controller="Course" method="get">
+					<input id="search-input" type="text" name="query" placeholder="Search courses..." class="form-control" />
+					<button type="submit" class="btn btn-primary" id="search-btn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg></button>
+				</form>
+				<br />
+				<br />
+
+				<button id="created-course-view-all" class="intro-btn1" asp-action="GetAll" asp-controller="Course" >
+					View Saved <svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom:5px" width="30" height="24" viewBox="0 0 25 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-icon lucide-bookmark"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /></svg>
+				</button>
+
+				<button class="intro-btn1" id="created-course-view-one" asp-action="GetAll" asp-controller="Course">
+					Filter <svg xmlns="http://www.w3.org/2000/svg" width="30" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal-icon lucide-sliders-horizontal"><line x1="21" x2="14" y1="4" y2="4" /><line x1="10" x2="3" y1="4" y2="4" /><line x1="21" x2="12" y1="12" y2="12" /><line x1="8" x2="3" y1="12" y2="12" /><line x1="21" x2="16" y1="20" y2="20" /><line x1="12" x2="3" y1="20" y2="20" /><line x1="14" x2="14" y1="2" y2="6" /><line x1="8" x2="8" y1="10" y2="14" /><line x1="16" x2="16" y1="18" y2="22" /></svg>
+				</button>
+
+
+
+			</div>
+			<br />
+			<br />
+
+			@if (allCoursesCount == 0)
+			{
+				<div id="course-holder">
+					<p>No courses created.</p>
+				</div>
+			}
+			else
+			{
+				<div id="courses-container">
+					@foreach (var item in Context.Courses)
+					{
+						<div id="course-holder">
+							<div id="created-course-container">								
+
+								<div id="created-course-image-container" class="container">
+									<h3>@item.Name</h3>
+									<figure id="created-course-image">
+										<img id="courseimg" src="@item.ImageUrl" />
+									</figure>
+
+									@if (Context.UserCourses.Find(userId,item.Id) == null)
+									{
+										<button class="intro-btn1 add-course-btn" value="@item.Id">Add</button>
+									}
+									else
+									{
+										<button class="intro-btn1 unadd-course-btn" value="@item.Id">Unadd</button>
+									}
+									<button class="intro-btn1"> Save<svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom:3px" width="30" height="20" viewBox="0 0 25 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-icon lucide-bookmark"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /></svg></button>
+									<br />
+									<br />
+									<div class="dropdown">
+										<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											Lessons
+										</button>
+										<ul class="dropdown-menu">
+											@foreach (var option in Context.Lessons.Where(c => c.CourseId == item.Id))
+											{
+												<li><a class="dropdown-item" href="/Lesson/LessonPage/@option.Id">@option.Name</a></li>
+											}
+										</ul>
+									</div>
+
+								</div>
+								<div id="created-course-body-container">
+									<br />
+									<h5>Duration</h5>
+									<div id="description-container">
+										<p>@item.Duration hours</p>
+									</div>
+									<br />
+									<h5>Created on</h5>
+									<div id="description-container">
+										<p>@item.Date</p>
+									</div>
+									<br />
+									<h5>Created by</h5>
+									<div id="description-container">
+										<p>@item.Author</p>
+									</div>
+									<br />
+									<h5>Description</h5>
+									<div id="description-container">
+										<p>@item.Description</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			}
+
+
+		</div>
+	</div>
+}
+
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+
+			$(document).on('click', '.add-course-btn', function () {
+				const courseId = $(this).val(); // Get the course ID from the button's value
+				const $button = $(this); // Store reference to the button
+
+				console.log("Attempting to add course with ID:", courseId);
+
+				// Disable button and show loading state
+				$button.prop('disabled', true).text('Adding...');
+
+				$.ajax({
+					url: '/Course/AddCourse', // Your API endpoint
+					type: 'POST',
+					data: { courseId: courseId }, // Send the courseId as data
+					headers: {
+						'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // Include CSRF token
+					},
+					success: function (response) {
+						console.log("Course added successfully:", response);
+						alert(response.message); // Use a custom modal/toast in a real app
+						$button.text('Added!').removeClass('bg-blue-600').addClass('bg-green-600');
+						// Optional: Update UI, e.g., remove button, show "Enrolled" status
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.error("Error adding course:", textStatus, errorThrown, jqXHR.responseText);
+						let errorMessage = "Error adding course.";
+						if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+							errorMessage = jqXHR.responseJSON.message;
+						} else if (jqXHR.responseText) {
+							 errorMessage = jqXHR.responseText;
+						}
+						alert(errorMessage); // Display error message
+						$button.prop('disabled', false).text('Add Course'); // Re-enable button
+					}
+				});
+			});
+
+			$(document).on('click', '.unadd-course-btn', function () {
+				const courseId = $(this).val(); // Get the course ID from the button's value
+				const $button = $(this); // Store reference to the button
+
+				console.log("Attempting to unadd course with ID:", courseId);
+
+				// Disable button and show loading state
+				$button.prop('disabled', true).text('Removing Course...');
+
+				$.ajax({
+					url: '/Course/UnaddCourse', // Your API endpoint
+					type: 'DELETE',
+					data: { courseId: courseId }, // Send the courseId as data
+					headers: {
+						'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // Include CSRF token
+					},
+					success: function (response) {
+						console.log("Course removed successfully:", response);
+						alert(response.message); // Use a custom modal/toast in a real app
+						$button.text('Unadded!').removeClass('bg-blue-600').addClass('bg-green-600');
+						// Optional: Update UI, e.g., remove button, show "Enrolled" status
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.error("Error unadding course:", textStatus, errorThrown, jqXHR.responseText);
+						let errorMessage = "Error unadding course.";
+						if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+							errorMessage = jqXHR.responseJSON.message;
+						} else if (jqXHR.responseText) {
+							 errorMessage = jqXHR.responseText;
+						}
+						alert(errorMessage); // Display error message
+						$button.prop('disabled', false).text('Unadd Course'); // Re-enable button
+					}
+				});
+			});
+		});
+	</script>
+}

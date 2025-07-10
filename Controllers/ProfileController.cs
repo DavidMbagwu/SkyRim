@@ -35,7 +35,13 @@ namespace SkyRim.Controllers
             {
                 userDetails = new UserDetails { Id = currentUser.Id };
             }
+
+            ViewBag.Genders = Choices.ToSelectListItems(Choices.Genders, userDetails.Gender);
+            ViewBag.Nationalities = Choices.ToSelectListItems(Choices.Nationality, userDetails.Nationality);
+            ViewBag.Races = Choices.ToSelectListItems(Choices.races, userDetails.Race);
             return View(userDetails);
+
+
         }
 
         [HttpPost]

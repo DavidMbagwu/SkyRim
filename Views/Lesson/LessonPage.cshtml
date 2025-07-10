@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.EntityFrameworkCore
+@using SkyRim.Models
+@using SkyRim.Data
+@inject ApplicationDbContext Context
+
+@model SkyRim.Models.Lesson
+@{
+	ViewData["Title"] = "Lesson Page";
+}
+
+<link rel="stylesheet" href="~/css/LessonPage.css" asp-append-version="true" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+	<div class="min-vh-100" id="lesson-manage-container">
+
+		<div id="lesson-page-header">
+			<h1>@Model.Name 🚀</h1>
+		</div>
+
+		<div id="video-container">
+			<iframe
+				width="1000"
+				height="515"
+				src="@Model.VideoUrl"
+				id="video_frame"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				referrerpolicy="strict-origin-when-cross-origin"
+				allowfullscreen
+			></iframe>
+			<p>Order in course: @Model.Order</p>
+		</div>
+		<div id="lesson-page-body">
+			<h2>Description</h2>
+			<div id="lesson-description">
+				<p>@Model.Description</p>
+			</div>
+			<br />
+			<h2>Transcript</h2>
+			<div id="lesson-description">
+				<p>@Model.Content</p>
+			</div>
+
+		</div>
+
+
+	</div>
+}

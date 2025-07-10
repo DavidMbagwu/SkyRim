@@ -1,0 +1,71 @@
+﻿body {
+}
+
+.heading-phrase {
+    text-align: center;
+    color: #6eacda;
+    text-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
+
+#course-create-form-container {
+    background-color: #3e434b;
+    color: lavender;
+    padding: 12px;
+    min-width: 30vh;
+    min-height: 60vh;
+    border-radius: 15px;
+}
+
+#form-section {
+    color: #6eacda;
+    width: 50vh;
+    margin: 15px;
+    border-radius: 25px;
+}
+
+#course-create-description {
+    border-radius: 15px;
+    padding: 12px;
+}
+
+#course-create-description::placeholder {
+    color: #6eacda;
+}
+
+#form-section-container{
+    display: flex;
+    gap: 2rem;
+}
+
+#form-section-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-left: 12px;
+}
+
+.intro-btn1 {
+    background-color: #6eacda;
+    color: #222831;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}
+
+.intro-btn2 {
+    background-color: white;
+    color: #222831;
+    border: none;
+    padding: 12px 24px;
+    margin-left: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(110, 172, 218, 0.2);
+}

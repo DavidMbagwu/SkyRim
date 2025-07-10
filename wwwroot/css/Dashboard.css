@@ -90,3 +90,35 @@
     transform: scale(1.05);
     cursor: pointer;
 }
+
+#course-holder {
+    background-color: #3e434b;
+    color: lavender;
+    padding: 12px;
+    min-width: 50vw;
+    min-height: 50vh;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align children to the left horizontally */
+    justify-content: flex-start; /* Align children to the top vertically */
+    margin-bottom: 20px;
+}
+
+#add-course-btn {
+    align-self: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.center-add-btn {
+    background-color: #222831;
+    color: #3e434b;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

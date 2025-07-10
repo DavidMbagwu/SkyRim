@@ -1,0 +1,32 @@
+﻿body {
+}
+
+#lesson-page-header {
+    color: white;
+    margin-bottom: 20px;
+}
+
+#video_frame{
+    border-radius: 20px;
+}
+
+#video-container{
+    color: white;
+}
+
+#lesson-description {
+    background-color: #3e434b;
+    color: lavender;
+    padding: 12px;
+    max-width: 1000px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align children to the left horizontally */
+    justify-content: flex-start; /* Align children to the top vertically */
+    margin-bottom: 20px;
+}
+
+#lesson-page-body{
+    color: white;
+}

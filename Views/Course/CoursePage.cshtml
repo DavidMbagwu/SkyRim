@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.EntityFrameworkCore
+@using SkyRim.Models
+@using SkyRim.Data
+@inject ApplicationDbContext Context
+
+@model SkyRim.Models.Course
+@{
+	ViewData["Title"] = "Course Page";
+}
+
+<link rel="stylesheet" href="~/css/CoursePage.css" asp-append-version="true" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+	var courseLessons = await Context.Lessons
+							.Where(l => l.CourseId == Model.Id)
+							.ToArrayAsync();
+
+	<div class="min-vh-100" id="lesson-manage-container">
+
+		<div id="lesson-page-header">
+			<h1>@Model.Name 🚀</h1>
+		</div>
+
+		<div class="course-card-image-container">
+			<img src="@Model.ImageUrl" alt="Course Image" id="course-card-image" />
+			<br />
+			<br />
+			<h6>Created on: @Model.Date</h6>
+		</div>
+		<br />
+		<div id="lesson-page-body">
+			<h2>Published by:</h2>
+			<div id="lesson-description">
+				<p>@Model.Author</p>
+			</div>
+			<h2>Description</h2>
+			<div id="lesson-description">
+				<p>@Model.Description</p>
+			</div>
+
+			<h2>Lessons</h2>
+			@if (courseLessons.Length > 0)
+			{
+				@foreach (var item in courseLessons)
+				{
+					<div id="lesson-description">						
+						<div class="course-card">
+							<div class="lesson-card-image-container">
+								<a style="text-decoration:none" href="/Lesson/LessonPage/@item.Id">
+								<img id="lesson-card-image" src="@item.ImgUrl" />
+								</a>
+							</div>
+							
+						</div>
+						<br />
+						<div class="course-card-text">
+							<h5>Title</h5>
+							<div id="description-container">
+								<a style="text-decoration:none" href="/Lesson/LessonPage/@item.Id">
+									<p>@item.Name</p>
+								</a>
+							</div>
+							<br />
+							<h5>Description</h5>
+							<div id="description-container">
+								<p>@item.Description</p>
+							</div>
+						</div>
+					</div>
+				}
+			}
+			else
+			{
+				<div id="course-holder">
+					<p>No courses added.</p>
+					<div id="add-course-btn">
+						<a asp-action="Create" asp-controller="Lesson">
+							<button class="center-add-btn">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+							</button>
+						</a>
+					</div>
+				</div>
+			}
+			<br />
+
+		</div>
+
+
+	</div>
+}

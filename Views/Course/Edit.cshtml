@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.EntityFrameworkCore
+@using SkyRim.Models
+@using SkyRim.Data
+@inject ApplicationDbContext Context
+@model SkyRim.Models.Course;
+
+@{
+	ViewData["Title"] = "Edit Course";
+}
+
+<link rel="stylesheet" href="~/css/Create.css" asp-append-version="true" />
+@{
+	var userId = UserManager.GetUserId(User);
+	var userDetails = await Context.UserDetails.FirstOrDefaultAsync(ud => ud.Id == userId);
+}
+
+<div class="heading-phrase">
+	<h1>@ViewData["Title"] 🤍</h1>
+</div>
+
+<div class="min-vh-100" id="course-create-container">
+	<div id="course-create-form-container">
+		<form id="course-create-form" asp-action="Edit" asp-controller="Course" method="post">
+			@{
+				var dateMade = DateOnly.FromDateTime(DateTime.Now);
+			}
+			@Html.AntiForgeryToken()
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="Date" value="@dateMade" />
+			<input type="hidden" asp-for="UserCourses" />
+			<input type="hidden" asp-for="CreatedCourses" />
+
+			<h2>Fill in Course Details</h2>
+			<div id="form-section-container">
+				<div class="form-floating" id="form-section">
+					<input asp-for="Author" class="form-control" aria-required="true" placeholder="@userDetails.FirstName @userDetails.LastName" value="@userDetails.FirstName @userDetails.LastName" />
+					<label asp-for="Author">Author</label>
+					<span asp-validation-for="Author" class="text-red-500 text-xs italic"></span>
+
+				</div>
+
+				<div class="form-floating" id="form-section">
+					<input asp-for="Name" class="form-control" aria-required="true" placeholder="Ex. Intro to French" />
+					<label asp-for="Name">Course Name</label>
+					<span asp-validation-for="Name" class="text-red-500 text-xs italic"></span>
+
+				</div>
+			</div>
+
+			<div id="form-section-container">
+				<div class="form-floating" id="form-section">
+					<input asp-for="Duration" class="form-control" aria-required="true" placeholder="Ex. 5hrs 30mins" />
+					<label asp-for="Duration">Estimated Duration</label>
+					<span asp-validation-for="Duration" class="text-red-500 text-xs italic"></span>
+
+				</div>
+
+				<div class="form-floating" id="form-section">
+					<input asp-for="ImageUrl" class="form-control" aria-required="true" placeholder="Ex. Stock Image" />
+					<label asp-for="ImageUrl">Image Link</label>
+					<span asp-validation-for="ImageUrl" class="text-red-500 text-xs italic"></span>
+
+				</div>
+			</div>
+
+
+
+			<div id="form-section">
+				<br />
+				<textarea asp-for="Description" rows="20" cols="160" id="course-create-description" placeholder="Description...."></textarea>
+				<span asp-validation-for="Description" class="text-red-500 text-xs italic"></span>
+
+			</div>
+
+			<div id="form-section-buttons">
+				<button type="submit" class="intro-btn1">Save Course</button>
+				<a asp-controller="Course" asp-action="Manage">
+					<button type="button" class="intro-btn2">Cancel</button>
+				</a>
+			</div>
+
+		</form>
+	</div>
+
+</div>
+

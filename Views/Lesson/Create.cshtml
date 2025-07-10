@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.EntityFrameworkCore
+@using SkyRim.Models
+@using SkyRim.Data
+@inject ApplicationDbContext Context
+@model SkyRim.Models.Lesson;
+
+@{
+	ViewData["Title"] = "Create Lesson";
+}
+
+<link rel="stylesheet" href="~/css/Create.css" asp-append-version="true" />
+
+
+@{
+	var userId = UserManager.GetUserId(User);
+	var userDetails = await Context.UserDetails.FirstOrDefaultAsync(ud => ud.Id == userId);
+}
+
+<div class="heading-phrase">
+	<h1>@ViewData["Title"] 🤍</h1>
+</div>
+
+<div class="min-vh-100" id="course-create-container">
+	<div id="course-create-form-container">
+		<form id="course-create-form" asp-action="Create" asp-controller="Lesson" method="post">
+			@{
+				var newId = Guid.NewGuid().ToString();
+				var dateMade = DateOnly.FromDateTime(DateTime.Now);
+			}
+			@Html.AntiForgeryToken()
+			<input type="hidden" asp-for="Id" value="@newId" />
+
+			<h2>Fill in Lesson Details</h2>
+			<div id="form-section-container">
+
+				<div class="form-floating" id="form-section">
+					<input asp-for="Name" class="form-control" aria-required="true" placeholder="Ex. Intro to French" />
+					<label asp-for="Name">Lesson Name</label>
+					<span asp-validation-for="Name" class="text-red-500 text-xs italic"></span>
+
+				</div>
+
+				<div class="form-floating" id="form-section">
+					<input type="number" asp-for="Order" class="form-control" aria-required="true" placeholder="Ex. 1" />
+					<label asp-for="Order">Order</label>
+					<span asp-validation-for="Order" class="text-red-500 text-xs italic"></span>
+
+				</div>
+
+			</div>
+
+			<div id="form-section-container">
+				<div class="form-floating" id="form-section">
+					<input asp-for="VideoUrl" class="form-control" aria-required="true" placeholder="Ex. Youtube Video Url" />
+					<label asp-for="VideoUrl">Video Link</label>
+					<span asp-validation-for="VideoUrl" class="text-red-500 text-xs italic"></span>
+
+				</div>
+
+				<div class="form-floating" id="form-section">
+					<input asp-for="ImgUrl" class="form-control" aria-required="true" placeholder="Ex. Stock Image" />
+					<label asp-for="ImgUrl">Image Link</label>
+					<span asp-validation-for="ImgUrl" class="text-red-500 text-xs italic"></span>
+
+				</div>
+			</div>
+
+			<div id="form-section-container">
+				<div class="form-floating" id="form-section">
+					<select asp-for="CourseId" class="form-control" asp-items="ViewBag.Courses"></select>
+					<label asp-for="CourseId">Course</label>
+					<span asp-validation-for="Order" class="text-red-500 text-xs italic"></span>
+
+				</div>
+			</div>
+
+
+			<div id="form-section">
+				<br />
+				<textarea asp-for="Description" rows="20" cols="160" id="course-create-description" placeholder="Description...."></textarea>
+				<span asp-validation-for="Description" class="text-red-500 text-xs italic"></span>
+
+			</div>
+
+			<div id="form-section">
+				<br />
+				<textarea asp-for="Content" rows="20" cols="160" id="course-create-description" placeholder="Transcript Content...."></textarea>
+				<span asp-validation-for="Content" class="text-red-500 text-xs italic"></span>
+
+			</div>
+
+			<div id="form-section-buttons">
+				<button type="submit" class="intro-btn1">Save Lesson</button>
+				<a asp-controller="Course" asp-action="Manage">
+					<button type="button" class="intro-btn2">Cancel</button>
+				</a>
+			</div>
+
+		</form>
+	</div>
+
+</div>
+

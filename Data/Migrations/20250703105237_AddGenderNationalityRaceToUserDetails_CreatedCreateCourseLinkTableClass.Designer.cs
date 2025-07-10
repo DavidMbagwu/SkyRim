@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkyRim.Data;
 
@@ -10,9 +11,11 @@ using SkyRim.Data;
 namespace SkyRim.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250703105237_AddGenderNationalityRaceToUserDetails_CreatedCreateCourseLinkTableClass")]
+    partial class AddGenderNationalityRaceToUserDetails_CreatedCreateCourseLinkTableClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
@@ -215,8 +218,9 @@ namespace SkyRim.Data.Migrations
 
             modelBuilder.Entity("SkyRim.Models.Course", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Author")
                         .HasColumnType("TEXT");
@@ -246,8 +250,8 @@ namespace SkyRim.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CourseId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CourseId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("TEXT");
@@ -261,15 +265,15 @@ namespace SkyRim.Data.Migrations
 
             modelBuilder.Entity("SkyRim.Models.Lesson", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CourseId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CourseId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
@@ -299,8 +303,8 @@ namespace SkyRim.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CourseId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CourseId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EnrollmentDate")
                         .HasColumnType("TEXT");

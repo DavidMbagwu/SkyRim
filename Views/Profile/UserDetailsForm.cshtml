@@ -28,19 +28,25 @@
             <span asp-validation-for="LastName" class="text-red-500 text-xs italic"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="Region" class="form-control" aria-required="true" placeholder="Ex. Houston" />
-            <label asp-for="Region">Region</label>
-            <span asp-validation-for="Region" class="text-red-500 text-xs italic"></span>
+            <select asp-for="Gender" class="form-control" asp-items="ViewBag.Genders">
+                <option value="">-- Select Gender --</option>
+            </select>
+            <label asp-for="Gender">Gender</label>
+            <span asp-validation-for="Gender" class="text-red-500 text-xs italic"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="State" class="form-control" aria-required="true" placeholder="Ex. Texas" />
-            <label asp-for="State">State</label>
-            <span asp-validation-for="State" class="text-red-500 text-xs italic"></span>
+            <select asp-for="Nationality" class="form-control" asp-items="ViewBag.Nationalities">
+                <option value="">-- Select Nationality --</option>
+            </select>
+            <label asp-for="Nationality">Nationality</label>
+            <span asp-validation-for="Nationality" class="text-red-500 text-xs italic"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="Country" class="form-control" aria-required="true" placeholder="Ex. United States" />
-            <label asp-for="Country">Country</label>
-            <span asp-validation-for="Country" class="text-red-500 text-xs italic"></span>
+            <select asp-for="Race" class="form-control" asp-items="ViewBag.Races">
+                <option value="">-- Select Race --</option>
+            </select>
+            <label asp-for="Race">Race</label>
+            <span asp-validation-for="Race" class="text-red-500 text-xs italic"></span>
         </div>
         <div class="form-floating mb-3">
             <input asp-for="LinkedInUrl" class="form-control" aria-required="false" placeholder="Ex. David" />

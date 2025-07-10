@@ -16,6 +16,7 @@ namespace SkyRim.Data
         public DbSet<Course> Courses { get; set; } = default!;
         public DbSet<UserCourse> UserCourses { get; set; } = default!;
         public DbSet<Lesson> Lessons { get; set; } = default!;
+        public DbSet<CreatedCourse> CreatedCourses { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,6 +52,21 @@ namespace SkyRim.Data
                 .HasOne(ud => ud.User)         // UserDetails has one IdentityUser
                 .WithOne()                     // IdentityUser has one UserDetails
                 .HasForeignKey<UserDetails>(ud => ud.Id); // Foreign key is UserDetails.Id
+
+            //**************************************************************************************************************//
+            builder.Entity<CreatedCourse>()
+                .HasKey(uc => new { uc.UserId, uc.CourseId }); // Define composite primary key
+
+            builder.Entity<CreatedCourse>()
+                .HasOne(uc => uc.User)               // UserCourse has one IdentityUser
+                .WithMany()                         // <--- Use WithMany() without parameter as IdentityUser doesn't have a direct navigation collection
+                .HasForeignKey(uc => uc.UserId);    // Foreign key is UserId
+
+            builder.Entity<CreatedCourse>()
+                .HasOne(uc => uc.Course)             // UserCourse has one Course
+                .WithMany(c => c.CreatedCourses)       // Course has many UserCourses
+                .HasForeignKey(uc => uc.CourseId);  // Foreign key is CourseId
+
 
 
         }

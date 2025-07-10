@@ -1,0 +1,215 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.EntityFrameworkCore
+@using SkyRim.Models
+@using SkyRim.Data
+@inject ApplicationDbContext Context
+
+@model SkyRim.Models.UserDetails
+@{
+	ViewData["Title"] = "Manage Course";
+}
+
+<link rel="stylesheet" href="~/css/ManageCourse.css" asp-append-version="true" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+	var userId = UserManager.GetUserId(User);
+	var userDetails = await Context.UserDetails.FirstOrDefaultAsync(ud => ud.Id == userId);
+	var userCourses = await Context.UserCourses.FirstOrDefaultAsync(ud => ud.UserId == userId);
+	int createdCoursesCount = await Context.CreatedCourses
+										.Where(uc => uc.UserId == userId)
+										.CountAsync();
+
+	<div class="min-vh-100" id="course-manage-container">
+		<div id="course-manage-header">
+			<h1>Manage Your Courses 🚀</h1>
+			<div id="course-manage-control_bar">
+
+				<form id="search-bar" asp-action="Search" asp-controller="Course" method="get">
+					<input id="search-input" type="text" name="query" placeholder="Search courses..." class="form-control" />
+					<button type="submit" class="btn btn-primary" id="search-btn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg></button>
+				</form>
+				<br />
+				<br />
+
+				<button id="created-course-view-all" class="intro-btn1" asp-action="GetAll" asp-controller="Course" >
+					View All
+				</button>
+
+				<button class="intro-btn1" id="created-course-view-one" asp-action="GetAll" asp-controller="Course">View One</button>
+
+				<a asp-area="" asp-controller="Course" asp-action="Create">
+					<button class="intro-btn1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+					</button>
+				</a>
+
+
+
+			</div>
+
+
+		</div>
+
+			@if (createdCoursesCount == 0)
+		{
+			<div id="course-holder">
+				<p>No courses created.</p>
+			</div>
+		}
+		else {
+			<div id="courses-container">
+				<div id="course-holder">
+				</div>
+			</div>
+
+			}
+
+
+
+	</div>
+}
+else
+{
+	<div class="container">
+		<h2>Please log in to manage your courses.</h2>
+	</div>
+	
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+			const lessonOptionsData = @Html.Raw(ViewBag.LessonsJson);
+			const lessonIdOptionsData = @Html.Raw(ViewBag.LessonIdsJson);
+			console.log("Viewbag data: ", lessonOptionsData);
+			console.log("Viewbag Id data: ", lessonIdOptionsData);
+
+			function generateOptionsHtml(optionsArray) {
+				let optionsHtml = '<li><a class="dropdown-item">-- Select Lesson --</a></li>';
+				optionsHtml += `<li><a class="dropdown-item" href="/Lesson/Create/">-- Add Lesson --</a></li>`;// Default option
+				optionsArray.forEach(option => {
+					optionsHtml += `
+					<li><a class="dropdown-item" href="/Lesson/LessonPage/${option.Value}">${option.Text}</a></li>
+					`;
+				});
+				return optionsHtml;
+			}
+
+			function renderCourseItem(item) {
+				const lessonsForCurrentCourse = [];
+				const lessonIdsForCurrentCourse = [];
+
+				for (const lessonIds of lessonIdOptionsData) {
+					if (lessonIds.Value === item.id) {
+						lessonIdsForCurrentCourse.push(lessonIds.Text); // If they match, add the lesson to our new array
+					}
+				}
+				console.log("Viewbag Ids: ", lessonIdsForCurrentCourse);
+
+				for (const lesson of lessonOptionsData) {
+					if (lessonIdsForCurrentCourse.includes(lesson.Value)) {
+						lessonsForCurrentCourse.push(lesson); // If they match, add the lesson to our new array
+					}
+				}
+				return `
+				<div id="course-holder">
+							<div id="created-course-container">
+								<div id="created-course-image-container" class="container">
+									<figure id="created-course-image">
+										<img id="courseimg" src="${item.imageUrl}" />
+									</figure>
+
+									<div id="created-course-image-container-controls">
+										<button class="intro-btn1 edit-btn" value="${item.id}">Edit</button>
+										<button class="intro-btn1">Delete</button>
+										<div class="dropdown">
+											<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											Lessons
+											</button>
+											<ul class="dropdown-menu">
+											${generateOptionsHtml(lessonsForCurrentCourse)}
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div>
+									<h5>Title</h5>
+									<div id="description-container">
+										<p>${item.name}</p>
+									</div>
+									<br />
+									<h5>Duration</h5>
+									<div id="description-container">
+										<p>${item.duration} hours</p>
+									</div>
+									<br />
+									<h5>Created on</h5>
+									<div id="description-container">
+										<p>${item.date}</p>
+									</div>
+									<br />
+									<h5>Description</h5>
+									<div id="description-container">
+										<p>${item.description}</p>
+									</div>
+								</div>
+							</div>
+						</div>				
+				`;
+			}
+
+            $("#created-course-view-all").click(function () {
+                $.get("/Course/GetAll", function (data) {
+                    console.log("Fetched data:", data);
+
+                    let html = "";
+
+                    data.forEach(function (item) {
+						console.log("Item Id: ", item.id);
+
+                        html += renderCourseItem(item);
+                    });
+
+                    // Render all course divs into the holder
+					$("#courses-container").html(html);
+
+					// Attach click handlers after rendering
+					$(".edit-btn").click(function () {
+						const courseId = $(this).val();
+						console.log(courseId);
+						window.location.href = `/Course/Edit/${courseId}`;
+					});
+                });
+            });
+
+			$("#created-course-view-one").click(function () {
+				$.get("/Course/GetAll", function (data) {
+					console.log("Fetched data:", data);
+
+					let html = "";
+
+					const firstItem = data[0];
+						console.log("Item Id: ", firstItem.id);
+
+						html += renderCourseItem(firstItem);
+
+					// Render all course divs into the holder
+					$("#courses-container").html(html);
+
+					// Attach click handlers after rendering
+					$(".edit-btn").click(function () {
+						const courseId = $(this).val();
+						console.log(courseId);
+						window.location.href = `/Course/Edit/${courseId}`;
+					});
+				});
+			});
+
+
+        });
+    </script>
+}

@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Course\" />
     <Folder Include="wwwroot\images\logos\" />
     <Folder Include="wwwroot\images\backgrounds\" />
     <Folder Include="wwwroot\fonts\" />

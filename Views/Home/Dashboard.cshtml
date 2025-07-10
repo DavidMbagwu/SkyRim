@@ -19,6 +19,9 @@
 {
     var userId = UserManager.GetUserId(User);
     var userDetails = await Context.UserDetails.FirstOrDefaultAsync(ud => ud.Id == userId);
+    var userCourses = await Context.UserCourses
+                                        .Where(uc => uc.UserId == userId)
+										.ToArrayAsync();
 
     <div class="min-vh-100" id="dashboard-container">
         <!-- Welcome Section -->
@@ -78,52 +81,72 @@
             </div>
             <div id="dashboard-courses">
                 <h3>Recent Courses</h3>
-                <div class="course-card">
-                    <div class="course-card-image-container">
-                        <img id="course-card-image" src="~/images/backgrounds/computer-course-md.jpg" />
-                    </div>
 
-                    <div class="course-card-text">
-                        <h5>UX Design Foundations</h5>
-                        <p>Frank Tech</p>
-                        <br />
-                        <br />
-                        <p>Course Progress</p>
-                    </div>
-                </div>
+                @if (userCourses.Length > 0)
+                {
+                    @if (userCourses.Length <= 3)
+                    {
+                        foreach (var item in userCourses)
+                        {
+                            var currentCourse = Context.Courses.FirstOrDefault(c => c.Id == item.CourseId);
+                            <div class="course-card">
+                                <div class="course-card-image-container">
+                                    <a href="/Course/CoursePage/@currentCourse.Id">
+                                        <img id="course-card-image" src="@currentCourse.ImageUrl" />
+                                    </a>
+                                </div>
 
-                <br />
-                <br />
+                                <div class="course-card-text">
+                                    <h5>@currentCourse.Name</h5>
+                                    <p>@currentCourse.Author</p>
+                                    <br />
+                                    <br />
+                                    <p>Course Progress</p>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
 
-                <div class="course-card">
-                    <div class="course-card-image-container">
-                        <img id="course-card-image" src="~/images/backgrounds/intro-to-seeding2-md.jpg" />
-                    </div>
+                        }
+                    }
+                    else
+                    {
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            var currentCourse = Context.Courses.FirstOrDefault(c => c.Id == userCourses[i].CourseId);
+                            <div class="course-card">
+                                <div class="course-card-image-container">
+                                    <a href="/Course/CoursePage/@currentCourse.Id">
+                                        <img id="course-card-image" src="@currentCourse.ImageUrl" />
+                                    </a>
+                                </div>
 
-                    <div class="course-card-text">
-                        <h5>Basic Concepts of Seeding</h5>
-                        <p>Green Thumb</p>
-                        <br />
-                        <br />
-                        <p>Course Progress</p>
+                                <div class="course-card-text">
+                                    <h5>@currentCourse.Name</h5>
+                                    <p>@currentCourse.Author</p>
+                                    <br />
+                                    <br />
+                                    <p>Course Progress</p>
+                                </div>
+                            </div>
+                             <br />
+                             <br />
+                        }
+                    }
+                }
+                else
+                {
+                    <div id="course-holder">
+                        <p>No courses added.</p>
+                        <div id="add-course-btn">
+                            <a asp-action="AllCourses" asp-controller="Course">
+                                <button class="center-add-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+                                </button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <br />
-
-                <div class="course-card">
-                    <div class="course-card-image-container">
-                        <img id="course-card-image" src="~/images/backgrounds/intro-to-architecture-md.jpg" />
-                    </div>
-
-                    <div class="course-card-text">
-                        <h5>Introduction to Architecture: Blueprints Design</h5>
-                        <p>Sander Jones</p>
-                        <br />
-                        <br />
-                        <p>Course Progress</p>
-                    </div>
-                </div>
+                }
 
             </div>
 
@@ -131,4 +154,11 @@
 
     </div>
 
+}
+else
+{
+    <div class="container">
+        <h2>Please log in to access your dashboard.</h2>
+        <p>Click <a asp-area="Identity" asp-page="/Account/Login">here</a> to log in.</p>
+    </div>
 }

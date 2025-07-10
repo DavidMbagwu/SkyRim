@@ -21,7 +21,11 @@
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
         }
     </button>
-    <button class="intro-btn2">Browse all courses</button>
+
+    <a asp-area="" asp-controller="Course" asp-action="AllCourses">
+        <button class="intro-btn2">Browse all courses</button>
+    </a>
+    
 
 </div>
 <div id="intro-image-container" class="container">

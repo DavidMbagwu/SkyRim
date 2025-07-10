@@ -5,14 +5,14 @@ namespace SkyRim.Models
 {
     public class Lesson
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? VideoUrl { get; set; }
         public string? ImgUrl { get; set; }
         public int Order { get; set; }
         public string? Content { get; set; }
-        public int CourseId { get; set; }
+        public string CourseId { get; set; }
 
 
         [ForeignKey(nameof(CourseId))]

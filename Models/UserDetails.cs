@@ -23,17 +23,17 @@ namespace SkyRim.Models
         public string LastName { get; set; } = string.Empty;
 
 
-        [Required(ErrorMessage = "Region is required.")]
-        [StringLength(100, ErrorMessage = "Region cannot exceed 100 characters.")]
-        public string Region { get; set; } = string.Empty;
+        [Display(Name = "Gender")]
+        [Required(ErrorMessage = "Gender is required.")]
+        public string Gender { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "State is required.")]
-        [StringLength(100, ErrorMessage = "State cannot exceed 100 characters.")]
-        public string State { get; set; } = string.Empty;
+        [Display(Name = "Nationality")]
+        [Required(ErrorMessage = "Nationality is required.")]
+        public string Nationality { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Country is required.")]
-        [StringLength(100, ErrorMessage = "Country cannot exceed 100 characters.")]
-        public string Country { get; set; } = string.Empty;
+        [Display(Name = "Race")]
+        [Required(ErrorMessage = "Race is required.")]
+        public string Race { get; set; } = string.Empty;
 
 
         [StringLength(200, ErrorMessage = "LinkedIn URL cannot exceed 200 characters.")]

@@ -1,0 +1,101 @@
+﻿body {
+}
+
+#lesson-page-header {
+    color: white;
+    margin-bottom: 20px;
+}
+
+#video_frame {
+    border-radius: 20px;
+}
+.course-card-image-container {
+    color: lavender;
+}
+
+#lesson-description {
+    background-color: #3e434b;
+    color: lavender;
+    padding: 12px;
+    max-width: 1000px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align children to the left horizontally */
+    justify-content: flex-start; /* Align children to the top vertically */
+    margin-bottom: 20px;
+}
+
+#lesson-page-body {
+    color: white;
+}
+
+#course-card-image {
+    width: 590px;
+    height: 365px;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+#course-holder {
+    background-color: #3e434b;
+    color: lavender;
+    padding: 12px;
+    min-width: 50vw;
+    min-height: 50vh;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align children to the left horizontally */
+    justify-content: flex-start; /* Align children to the top vertically */
+    margin-bottom: 20px;
+}
+
+.course-card-text{
+    color: lavender;
+}
+
+.course-card-text a {
+    text-decoration: none;
+    color: lavender;
+}
+
+#add-course-btn {
+    align-self: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.center-add-btn {
+    background-color: #222831;
+    color: #3e434b;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.course-card {
+    color: white;
+    gap: 1rem;
+}
+
+#lesson-card-image {
+    width: 390px;
+    height: 265px;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#lesson-card-image:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+#description-container {
+    background-color: #222831;
+    padding: 12px;
+    border-radius: 15px;
+    min-width: 60vw;
+}
